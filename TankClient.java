@@ -11,10 +11,11 @@ public class TankClient extends Frame{
 	private static final long serialVersionUID = 1L;
 
 	
-	public void LaunchFrame(){
+	public void launchFrame(){
 		setBounds(200,200,600,800);
 		setLayout(null);
-		setBackground(Color.blue);
+		//setBackground(Color.blue);
+		this.setResizable(false);
 		setVisible(true);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e){
@@ -25,8 +26,8 @@ public class TankClient extends Frame{
 	
 	public static void main(String[] args) {
 		// TODO 自动生成的方法存根
-		TankClient mf = new TankClient();
-		mf.LaunchFrame();
+		TankClient tc = new TankClient();
+		tc.launchFrame();
 	}
 
 }
