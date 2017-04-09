@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -22,6 +23,13 @@ public class TankClient extends Frame{
 				System.exit(0);
 			}
 		});
+	}
+	
+	public void paint(Graphics g){
+		Color c = g.getColor();
+		g.setColor(Color.yellow);
+		g.fillOval(50, 50, 40, 40);
+		g.setColor(c);
 	}
 	
 	public static void main(String[] args) {
