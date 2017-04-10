@@ -15,7 +15,9 @@ public class Tank {
 	enum Direction {
 		L, R, U, D, LU, LD, RU, RD, stop
 	};
-
+	
+	private Direction t;
+	
 	// 方向变量
 	private Direction dir = Direction.stop;
 	// 坦克直径
@@ -92,6 +94,7 @@ public class Tank {
 		case KeyEvent.VK_UP:
 			kU = true;
 			break;
+		//为空格时发射子弹
 		case KeyEvent.VK_SPACE:
 			this.bullet = fire();
 		}
@@ -100,8 +103,16 @@ public class Tank {
 
 	// 开火事件
 	public Bullet fire() {
-		Bullet temp = new Bullet(x+(Tank_r-Bullet.bullet_r)/2, y+(Tank_r-Bullet.bullet_r)/2, dir);
-		return temp;
+		Direction temp = null;
+		if(dir == Direction.stop){
+			if( t == null)
+				temp = Direction.R;
+			else
+				temp = t;
+		}else
+			temp = dir;
+		Bullet B = new Bullet(x+(Tank_r-Bullet.bullet_r)/2, y+(Tank_r-Bullet.bullet_r)/2, temp);
+		return B;
 
 	}
 
@@ -145,6 +156,8 @@ public class Tank {
 			dir = Direction.RD;
 		else
 			dir = Direction.stop;
+		if (dir != Direction.stop)
+			t = dir;
 	}
 
 }
