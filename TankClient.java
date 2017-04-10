@@ -79,9 +79,14 @@ public class TankClient extends Frame {
 	
 	//自定义键盘监听类：
 	private class MyKeyEvent extends KeyAdapter{
-
+		
+		//窗体的按键释放操作
+		public void keyReleased(KeyEvent e) {
+			myTank.keyReleased(e);
+		}
+		//窗体的按键按压操作
 		public void keyPressed(KeyEvent e) {
-			//System.out.println("OK");
+			//这是Tank自己的按键操作
 			myTank.keyPressed(e);
 		}
 	}

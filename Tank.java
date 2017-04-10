@@ -34,10 +34,6 @@ public class Tank {
 		g.fillOval(x, y, Tank_r, Tank_r);
 		g.setColor(c);
 		move();
-		this.kL = false;
-		this.kR = false;
-		this.kU = false;
-		this.kD = false;
 	}
 	
 	//移动事件
@@ -76,7 +72,7 @@ public class Tank {
 		}
 	}
 	
-	//Tank的按键操作:修改方向
+	//Tank的按键按压操作:修改方向
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {
@@ -91,6 +87,25 @@ public class Tank {
 			break;
 		case KeyEvent.VK_UP:
 			kU = true;
+			break;
+		}
+		locateDirection();
+	}
+	//坦克的按键释放操作：修正方向
+	public void keyReleased(KeyEvent e) {
+		int key = e.getKeyCode();
+		switch (key) {
+		case KeyEvent.VK_RIGHT:
+			kR = false;
+			break;
+		case KeyEvent.VK_LEFT:
+			kL = false;
+			break;
+		case KeyEvent.VK_DOWN:
+			kD = false;
+			break;
+		case KeyEvent.VK_UP:
+			kU = false;
 			break;
 		}
 		locateDirection();
@@ -117,6 +132,5 @@ public class Tank {
 		else 
 			dir = Direction.stop;
 	}
-	
 	
 }
