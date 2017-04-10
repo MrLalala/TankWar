@@ -3,14 +3,17 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 public class Tank {
-
+	
+	
+	//新建一个子弹对象
+	Bullet bullet = null;
 	// 坦克起始位置
 	private int x, y;
 	// 方向判断
 	private boolean kL = false, kR = false, kU = false, kD = false;
 
 	// 方向枚举
-	private enum Direction {
+	enum Direction {
 		L, R, U, D, LU, LD, RU, RD,stop
 	};
 	
@@ -33,6 +36,8 @@ public class Tank {
 		g.setColor(Color.yellow);
 		g.fillOval(x, y, Tank_r, Tank_r);
 		g.setColor(c);
+		if(bullet != null)
+			bullet.paint(g);
 		move();
 	}
 	
@@ -88,6 +93,8 @@ public class Tank {
 		case KeyEvent.VK_UP:
 			kU = true;
 			break;
+		case KeyEvent.VK_SPACE:
+			bullet = new Bullet(x+Tank_r/2, y+Tank_r/2, this.dir);
 		}
 		locateDirection();
 	}
