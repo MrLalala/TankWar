@@ -59,7 +59,10 @@ public class Tank {
 	// 重绘事件
 	public void draw(Graphics g) {
 		//死了就不画了
-		if(!live)return;
+		if(!live){
+			tc.tanks.remove(this);
+			return;
+		}
 		Color c = g.getColor();
 		if(bGood) g.setColor(Color.yellow);
 		else g.setColor(Color.red);

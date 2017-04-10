@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 public class Bullet {
 	//子弹的起始位置
@@ -98,7 +99,17 @@ public class Bullet {
 		if(this.getRect().intersects(t.getRect()) && t.isLive()){
 			t.setLive(false);
 			this.live = false;
+			tc.explodes.add(new Explode(x, y, tc));
 			return true;
+		}
+		return false;
+	}
+	
+	public boolean hitTanks(ArrayList<Tank> tanks){
+		for(int i =0 ;i<tanks.size();i++){
+			if(hitTank(tanks.get(i))){
+				return true;
+			}
 		}
 		return false;
 	}
