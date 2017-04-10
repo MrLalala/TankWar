@@ -51,8 +51,11 @@ public class TankClient extends Frame {
 		g.drawString("Bullets Count:"+bullets.size(), 10, 50);
 		for(int i = 0; i< bullets.size();i++){
 			bullet = bullets.get(i);
-			if (bullet != null)
-				bullet.paint(g);
+			//ÅÐ¶Ï×Óµ¯ËÀÍö±ê¼Ç
+			/*if (!bullet.isLive())
+				bullets.remove(i);
+			else*/
+			bullet.paint(g);
 		}
 		myTank.draw(g);
 	}

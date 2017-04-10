@@ -167,7 +167,7 @@ public class Tank {
 			temp = pt_Direct;
 		} else
 			temp = dir;
-		Bullet B = new Bullet(x + (Tank_r - Bullet.bullet_r) / 2, y + (Tank_r - Bullet.bullet_r) / 2, temp);
+		Bullet B = new Bullet(x + (Tank_r - Bullet.bullet_r) / 2, y + (Tank_r - Bullet.bullet_r) / 2, temp,this.tc);
 		return B;
 
 	}
