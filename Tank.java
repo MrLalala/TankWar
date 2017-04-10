@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class Tank {
 
@@ -12,6 +13,9 @@ public class Tank {
 	
 	// 拿到窗体引用
 	private TankClient tc = null;
+	
+	//基于坦克的行动原理，使用随机数产生器使其随机移动
+	private static Random r = new Random();
 
 	// 方向枚举
 	enum Direction {
@@ -55,12 +59,18 @@ public class Tank {
 		this(x, y, bGood);
 		this.tc = tc;
 	}
+	
+	public Tank(int x, int y,boolean bGood, Direction dif,TankClient tc) {
+		this(x, y, bGood, tc);
+		this.dir = dif;
+	}
 
 	// 重绘事件
 	public void draw(Graphics g) {
 		//死了就不画了
 		if(!live){
-			tc.tanks.remove(this);
+			if(!bGood)
+				tc.tanks.remove(this);
 			return;
 		}
 		Color c = g.getColor();
@@ -142,6 +152,15 @@ public class Tank {
 		if(y < 30) y = 30;
 		if(x > TankClient.Game_w-Tank_r-5) x = TankClient.Game_w-Tank_r-5;
 		if(y > TankClient.Game_h-Tank_r-5) y = TankClient.Game_h-Tank_r-5;
+		
+		//指定敌方坦克的随机移动方向
+		if(!bGood){
+			//该方法可以将枚举类型转为相应的数组
+			Direction[] dirs = Direction.values();
+			int rn = r.nextInt(dirs.length);
+			this.dir = dirs[rn];
+			this.pt_Direct = dir;
+		}
 	}
 
 	// Tank的按键按压操作:修改方向

@@ -16,8 +16,6 @@ public class TankClient extends Frame {
 	private static final long serialVersionUID = 1L;
 	// 初始化一个坦克
 	Tank myTank = new Tank(50, 50, true, this);
-	Tank enemyTank = new Tank(100, 100, false, this);
-
 	// 敌方坦克容器
 	ArrayList<Tank> tanks = new ArrayList<Tank>();
 	// 游戏框体大小
@@ -35,7 +33,7 @@ public class TankClient extends Frame {
 	// 初始化方法
 	public void launchFrame() {
 		for (int i = 1;i<=10;i++){
-			tanks.add(new Tank(50+i*50,50,false,this));
+			tanks.add(new Tank(50+i*50,50,false,Tank.Direction.D,this));
 		}
 		setBounds(200, 200, Game_w, Game_h);
 		setLayout(null);
@@ -48,7 +46,6 @@ public class TankClient extends Frame {
 		});
 		this.addKeyListener(new MyKeyEvent());
 		setVisible(true);
-		tanks.add(enemyTank);
 		new Thread(new PaintThread()).start();
 	}
 
