@@ -8,7 +8,7 @@ public class Tank {
 	private int x, y;
 	// 方向判断
 	private boolean kL = false, kR = false, kU = false, kD = false;
-
+	
 	// 引用TankClient的一个对象
 	private TankClient tc = null;
 
@@ -16,9 +16,13 @@ public class Tank {
 	enum Direction {
 		L, R, U, D, LU, LD, RU, RD, stop
 	};
-
+	
+	// 初始方向
 	private Direction pt_Direct = Direction.D;
-
+	
+	// 敌我标记
+	private boolean bGood;
+	
 	// 方向变量
 	private Direction dir = Direction.stop;
 	// 坦克直径
@@ -27,22 +31,23 @@ public class Tank {
 	public static final int x_speed = 10, y_speed = 10;
 
 	// 构造函数
-	public Tank(int x, int y) {
+	public Tank(int x, int y,boolean bGood) {
 		this.x = x;
 		this.y = y;
+		this.bGood = bGood;
 	}
 
 	// 带TankClient的构造函数
-	public Tank(int x, int y, TankClient tc) {
-		this(x, y);
+	public Tank(int x, int y,boolean bGood, TankClient tc) {
+		this(x, y, bGood);
 		this.tc = tc;
 	}
 
 	// 重绘事件
 	public void draw(Graphics g) {
-
 		Color c = g.getColor();
-		g.setColor(Color.yellow);
+		if(bGood) g.setColor(Color.yellow);
+		else g.setColor(Color.red);
 		g.fillOval(x, y, Tank_r, Tank_r);
 		g.setColor(c);
 		draw_pt(g);

@@ -15,7 +15,8 @@ public class TankClient extends Frame {
 	 */
 	private static final long serialVersionUID = 1L;
 	//初始化一个坦克
-	Tank myTank = new Tank(50, 50,this);
+	Tank myTank = new Tank(50, 50, true, this);
+	Tank enemyTank = new Tank(100, 100, false, this);
 	//游戏框体大小
 	public static final int Game_w = 700,Game_h = 800;
 	
@@ -58,6 +59,7 @@ public class TankClient extends Frame {
 			bullet.paint(g);
 		}
 		myTank.draw(g);
+		enemyTank.draw(g);
 	}
 	
 	//重写主窗体的 update 方法
