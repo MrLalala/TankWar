@@ -20,10 +20,8 @@ public class TankClient extends Frame {
 	//游戏框体大小
 	public static final int Game_w = 700,Game_h = 800;
 	
-	//创建一个实验性爆炸对象
-	private Explode e = new Explode(200, 200, this);
-	// 新建一个子弹对象
-	Bullet bullet = null;
+	//新建爆炸列表
+	ArrayList<Explode>eList = new ArrayList<Explode>();
 	// 新建子弹列表
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	
@@ -51,16 +49,22 @@ public class TankClient extends Frame {
 	public void paint(Graphics g) {
 		//使用坦克自己的绘图事件
 		g.drawString("Bullets Count:"+bullets.size(), 10, 50);
+		g.drawString("Explodes Count:"+eList.size(), 10, 70);
 		for(int i = 0; i< bullets.size();i++){
-			bullet = bullets.get(i);
-			bullet.hitTank(enemyTank);
+			Bullet bullet = bullets.get(i);
+			if(bullet.hitTank(enemyTank))
+				eList.add(new Explode(bullet.x, bullet.y,this));
 			//判断子弹死亡标记
 			/*if (!bullet.isLive())
 				bullets.remove(i);
 			else*/
 			bullet.paint(g);
 		}
-		e.draw(g);
+		
+		for(int i = 0;i< eList.size();i++){
+			Explode e = eList.get(i);
+			e.draw(g);
+		}
 		myTank.draw(g);
 		enemyTank.draw(g);
 	}

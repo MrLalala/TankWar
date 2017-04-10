@@ -23,7 +23,10 @@ public class Explode {
 	
 	//ÖØĞ´»æÍ¼ÊÂ¼ş
 	public void draw(Graphics g){
-		if(!live) return;
+		if(!live){
+			tc.eList.remove(this);
+			return;
+		}
 		if(step == dia.length){
 			live =false;
 			step = 0;
