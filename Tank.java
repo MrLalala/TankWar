@@ -4,15 +4,14 @@ import java.awt.event.KeyEvent;
 
 public class Tank {
 
-	
-
 	// 坦克起始位置
 	private int x, y;
 	// 方向判断
 	private boolean kL = false, kR = false, kU = false, kD = false;
-	
-	//引用TankClient的一个对象
+
+	// 引用TankClient的一个对象
 	private TankClient tc = null;
+
 	// 方向枚举
 	enum Direction {
 		L, R, U, D, LU, LD, RU, RD, stop
@@ -32,14 +31,16 @@ public class Tank {
 		this.x = x;
 		this.y = y;
 	}
-	//带TankClient的构造函数
-	public Tank(int x,int y ,TankClient tc) {
+
+	// 带TankClient的构造函数
+	public Tank(int x, int y, TankClient tc) {
 		this(x, y);
 		this.tc = tc;
 	}
+
 	// 重绘事件
 	public void draw(Graphics g) {
-		
+
 		Color c = g.getColor();
 		g.setColor(Color.yellow);
 		g.fillOval(x, y, Tank_r, Tank_r);
@@ -52,28 +53,28 @@ public class Tank {
 	void draw_pt(Graphics g) {
 		switch (pt_Direct) {
 		case L:
-			g.drawLine(x+Tank_r/2, y+Tank_r/2, x, y+Tank_r/2);
+			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x, y + Tank_r / 2);
 			break;
 		case R:
-			g.drawLine(x+Tank_r/2, y+Tank_r/2, x + Tank_r, y+Tank_r/2);
+			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x + Tank_r, y + Tank_r / 2);
 			break;
 		case U:
-			g.drawLine(x+Tank_r/2, y+Tank_r/2, x + Tank_r/2, y);
+			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x + Tank_r / 2, y);
 			break;
 		case D:
-			g.drawLine(x+Tank_r/2, y+Tank_r/2, x + Tank_r/2, y+Tank_r);
+			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x + Tank_r / 2, y + Tank_r);
 			break;
 		case LU:
-			g.drawLine(x+Tank_r/2, y+Tank_r/2, x, y);
+			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x, y);
 			break;
 		case LD:
-			g.drawLine(x+Tank_r/2, y+Tank_r/2, x, y+Tank_r);
+			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x, y + Tank_r);
 			break;
 		case RU:
-			g.drawLine(x+Tank_r/2, y+Tank_r/2, x + Tank_r, y);
+			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x + Tank_r, y);
 			break;
 		case RD:
-			g.drawLine(x+Tank_r/2, y+Tank_r/2, x + Tank_r, y+Tank_r);
+			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x + Tank_r, y + Tank_r);
 			break;
 		default:
 			break;
@@ -114,6 +115,10 @@ public class Tank {
 		case stop:
 			break;
 		}
+		if(x < 7) x = 7;
+		if(y < 30) y = 30;
+		if(x > TankClient.Game_w-Tank_r-5) x = TankClient.Game_w-Tank_r-5;
+		if(y > TankClient.Game_h-Tank_r-5) y = TankClient.Game_h-Tank_r-5;
 	}
 
 	// Tank的按键按压操作:修改方向
@@ -167,7 +172,7 @@ public class Tank {
 			temp = pt_Direct;
 		} else
 			temp = dir;
-		Bullet B = new Bullet(x + (Tank_r - Bullet.bullet_r) / 2, y + (Tank_r - Bullet.bullet_r) / 2, temp,this.tc);
+		Bullet B = new Bullet(x + (Tank_r - Bullet.bullet_r) / 2, y + (Tank_r - Bullet.bullet_r) / 2, temp, this.tc);
 		return B;
 
 	}
