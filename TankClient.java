@@ -48,6 +48,7 @@ public class TankClient extends Frame {
 	//重写的绘图事件
 	public void paint(Graphics g) {
 		//使用坦克自己的绘图事件
+		g.drawString("Bullets Count:"+bullets.size(), 10, 50);
 		for(int i = 0; i< bullets.size();i++){
 			bullet = bullets.get(i);
 			if (bullet != null)

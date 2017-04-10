@@ -133,9 +133,6 @@ public class Tank {
 			kU = true;
 			break;
 		// 为空格时发射子弹
-		case KeyEvent.VK_SPACE:
-			tc.bullets.add(fire());
-			break;
 		}
 		locateDirection();
 	}
@@ -155,6 +152,9 @@ public class Tank {
 			break;
 		case KeyEvent.VK_UP:
 			kU = false;
+			break;
+		case KeyEvent.VK_SPACE:
+			tc.bullets.add(fire());
 			break;
 		}
 		locateDirection();
