@@ -14,7 +14,7 @@ public class TankClient extends Frame {
 	 */
 	private static final long serialVersionUID = 1L;
 	//坦克的位置（初始值为默认位置）
-	static int x = 0,y = 0;
+	Tank myTank = new Tank(50, 50);
 	//坦克直径
 	public static final int Tank_r = 50;
 	//游戏框体大小
@@ -43,10 +43,8 @@ public class TankClient extends Frame {
 
 	//重写的绘图事件
 	public void paint(Graphics g) {
-		Color c = g.getColor();
-		g.setColor(Color.yellow);
-		g.fillOval(x, y, Tank_r, Tank_r);
-		g.setColor(c);
+		//使用坦克自己的绘图事件
+		myTank.draw(g);
 	}
 	
 	//重写主窗体的 update 方法
@@ -74,7 +72,7 @@ public class TankClient extends Frame {
 		public void run() {
 			while(true){
 				try {
-					Thread.sleep(5);
+					Thread.sleep(10);
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 				}
@@ -88,31 +86,8 @@ public class TankClient extends Frame {
 
 		public void keyPressed(KeyEvent e) {
 			//System.out.println("OK");
-			int key = e.getKeyCode();
-			switch (key) {
-			case KeyEvent.VK_RIGHT:
-				if (x <= Game_w-Tank_r)
-					x +=speed;
-				break;
-			case KeyEvent.VK_LEFT:
-				if (x >=0)
-					x -=speed;
-				break;
-			case KeyEvent.VK_DOWN:
-				if (y <= Game_h-Tank_r)
-					y +=speed;
-				break;
-			case KeyEvent.VK_UP:
-				if (y >=0)
-					y -=speed;
-				break;
-	
-			default:
-				break;
-			}
-
+			myTank.keyPressed(e);
 		}
-		
 	}
 	
 	//主函数：
