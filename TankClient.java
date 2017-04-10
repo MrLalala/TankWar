@@ -20,6 +20,8 @@ public class TankClient extends Frame {
 	//游戏框体大小
 	public static final int Game_w = 700,Game_h = 800;
 	
+	//创建一个实验性爆炸对象
+	private Explode e = new Explode(200, 200, this);
 	// 新建一个子弹对象
 	Bullet bullet = null;
 	// 新建子弹列表
@@ -58,6 +60,7 @@ public class TankClient extends Frame {
 			else*/
 			bullet.paint(g);
 		}
+		e.draw(g);
 		myTank.draw(g);
 		enemyTank.draw(g);
 	}

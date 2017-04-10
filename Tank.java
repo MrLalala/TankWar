@@ -10,7 +10,7 @@ public class Tank {
 	// 方向判断
 	private boolean kL = false, kR = false, kU = false, kD = false;
 	
-	// 引用TankClient的一个对象
+	// 拿到窗体引用
 	private TankClient tc = null;
 
 	// 方向枚举
@@ -59,7 +59,7 @@ public class Tank {
 	// 重绘事件
 	public void draw(Graphics g) {
 		//死了就不画了
-		if(!live) return;
+		if(!live)return;
 		Color c = g.getColor();
 		if(bGood) g.setColor(Color.yellow);
 		else g.setColor(Color.red);
