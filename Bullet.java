@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Bullet {
 	//子弹的起始位置
@@ -14,6 +15,7 @@ public class Bullet {
 	private Color bColor = Color.black;
 	//生死标记
 	private boolean live = true;
+	
 	public boolean isLive() {
 		return live;
 	}
@@ -34,6 +36,10 @@ public class Bullet {
 	}
 	//子弹的重绘事件
 	public void paint(Graphics g){
+		if(!live){
+			tc.bullets.remove(this);
+			return;
+		}
 		Color color = g.getColor();
 		g.setColor(bColor);
 		g.fillOval(x, y, bullet_r, bullet_r);
@@ -78,8 +84,22 @@ public class Bullet {
 		//死亡标记条件
 		if(x <= 0 || y <= 0 || x >= TankClient.Game_w || y >= TankClient.Game_h){
 			this.live = false;
-			tc.bullets.remove(this);
 		}
 			
+	}
+	
+	//判断
+	public Rectangle getRect(){
+		return new Rectangle(x, y, bullet_r, bullet_r);
+	}
+	
+	//击中方法
+	public boolean hitTank(Tank t){
+		if(this.getRect().intersects(t.getRect()) && t.isLive()){
+			t.setLive(false);
+			this.live = false;
+			return true;
+		}
+		return false;
 	}
 }

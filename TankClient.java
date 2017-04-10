@@ -24,10 +24,9 @@ public class TankClient extends Frame {
 	Bullet bullet = null;
 	// 新建子弹列表
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+	
 	//实现双缓冲：
 	//新建一个虚拟背景图片对象
-	
-	
 	Image offScreen = null;
 
 	//初始化方法
@@ -52,6 +51,7 @@ public class TankClient extends Frame {
 		g.drawString("Bullets Count:"+bullets.size(), 10, 50);
 		for(int i = 0; i< bullets.size();i++){
 			bullet = bullets.get(i);
+			bullet.hitTank(enemyTank);
 			//判断子弹死亡标记
 			/*if (!bullet.isLive())
 				bullets.remove(i);

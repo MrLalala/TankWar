@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 public class Tank {
@@ -23,6 +24,17 @@ public class Tank {
 	// 敌我标记
 	private boolean bGood;
 	
+	//生死标记
+	private boolean live = true;
+	
+	public boolean isLive() {
+		return live;
+	}
+
+	public void setLive(boolean live) {
+		this.live = live;
+	}
+
 	// 方向变量
 	private Direction dir = Direction.stop;
 	// 坦克直径
@@ -35,6 +47,7 @@ public class Tank {
 		this.x = x;
 		this.y = y;
 		this.bGood = bGood;
+		this.live = true;
 	}
 
 	// 带TankClient的构造函数
@@ -45,6 +58,8 @@ public class Tank {
 
 	// 重绘事件
 	public void draw(Graphics g) {
+		//死了就不画了
+		if(!live) return;
 		Color c = g.getColor();
 		if(bGood) g.setColor(Color.yellow);
 		else g.setColor(Color.red);
@@ -204,6 +219,11 @@ public class Tank {
 			dir = Direction.stop;
 		if (dir != Direction.stop)
 			pt_Direct = dir;
+	}
+
+	public Rectangle getRect() {
+		// TODO 自动生成的方法存根
+		return new Rectangle(this.x, this.y, Tank_r, Tank_r);
 	}
 
 }
