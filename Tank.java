@@ -3,9 +3,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 public class Tank {
-	
-	
-	//新建一个子弹对象
+
+	// 新建一个子弹对象
 	Bullet bullet = null;
 	// 坦克起始位置
 	private int x, y;
@@ -14,35 +13,35 @@ public class Tank {
 
 	// 方向枚举
 	enum Direction {
-		L, R, U, D, LU, LD, RU, RD,stop
+		L, R, U, D, LU, LD, RU, RD, stop
 	};
-	
-	//方向变量
+
+	// 方向变量
 	private Direction dir = Direction.stop;
 	// 坦克直径
-	public static final int Tank_r = 30;
+	public static final int Tank_r = 40;
 	// 移动速度
-	public static final int x_speed = 10,y_speed = 10;
-	
-	//构造函数
+	public static final int x_speed = 10, y_speed = 10;
+
+	// 构造函数
 	public Tank(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	
-	//重绘事件
+
+	// 重绘事件
 	public void draw(Graphics g) {
 		Color c = g.getColor();
 		g.setColor(Color.yellow);
 		g.fillOval(x, y, Tank_r, Tank_r);
 		g.setColor(c);
-		if(bullet != null)
+		if (bullet != null)
 			bullet.paint(g);
 		move();
 	}
-	
-	//移动事件
-	void move(){
+
+	// 移动事件
+	void move() {
 		switch (dir) {
 		case L:
 			x -= x_speed;
@@ -72,12 +71,12 @@ public class Tank {
 			x += x_speed;
 			y += y_speed;
 			break;
-		case stop: 
+		case stop:
 			break;
 		}
 	}
-	
-	//Tank的按键按压操作:修改方向
+
+	// Tank的按键按压操作:修改方向
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {
@@ -94,11 +93,19 @@ public class Tank {
 			kU = true;
 			break;
 		case KeyEvent.VK_SPACE:
-			bullet = new Bullet(x+Tank_r/2, y+Tank_r/2, this.dir);
+			this.bullet = fire();
 		}
 		locateDirection();
 	}
-	//坦克的按键释放操作：修正方向
+
+	// 开火事件
+	public Bullet fire() {
+		Bullet temp = new Bullet(x+(Tank_r-Bullet.bullet_r)/2, y+(Tank_r-Bullet.bullet_r)/2, dir);
+		return temp;
+
+	}
+
+	// 坦克的按键释放操作：修正方向
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {
@@ -117,27 +124,27 @@ public class Tank {
 		}
 		locateDirection();
 	}
-	
-	//判断方向
-	void locateDirection(){
-		if(kL && !kR && !kU && ! kD)
+
+	// 判断方向
+	void locateDirection() {
+		if (kL && !kR && !kU && !kD)
 			dir = Direction.L;
-		else if(!kL && kR && !kU && ! kD)
+		else if (!kL && kR && !kU && !kD)
 			dir = Direction.R;
-		else if(!kL && !kR && kU && ! kD)
+		else if (!kL && !kR && kU && !kD)
 			dir = Direction.U;
-		else if(!kL && !kR && !kU &&  kD)
+		else if (!kL && !kR && !kU && kD)
 			dir = Direction.D;
-		else if(kL && !kR && kU && ! kD)
+		else if (kL && !kR && kU && !kD)
 			dir = Direction.LU;
-		else if(kL && !kR && !kU &&  kD)
+		else if (kL && !kR && !kU && kD)
 			dir = Direction.LD;
-		else if(!kL && kR && kU && ! kD)
+		else if (!kL && kR && kU && !kD)
 			dir = Direction.RU;
-		else if(!kL && kR && !kU &&  kD)
+		else if (!kL && kR && !kU && kD)
 			dir = Direction.RD;
-		else 
+		else
 			dir = Direction.stop;
 	}
-	
+
 }

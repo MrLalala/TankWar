@@ -9,9 +9,7 @@ public class Bullet {
 	//子弹的速度 
 	private static final int x_speed = 20,y_speed = 20;
 	//子弹的大小
-	private static final int bullet_r = 10; 
-	
-	
+	static final int bullet_r = 10; 	
 	//构造函数：子弹的起始位置
 	public Bullet(int x, int y,Tank.Direction dir) {
 		this.x = x;
