@@ -13,16 +13,12 @@ public class TankClient extends Frame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//坦克的位置（初始值为默认位置）
+	//初始化一个坦克
 	Tank myTank = new Tank(50, 50);
-	//坦克直径
-	public static final int Tank_r = 50;
 	//游戏框体大小
 	public static final int Game_w = 700,Game_h = 800;
-	//定义移动速度
-	public static final int speed = 10;
 	//实现双缓冲：
-	//新建一个图片对象
+	//新建一个虚拟背景图片对象
 	Image offScreen = null;
 
 	//初始化方法
@@ -72,7 +68,7 @@ public class TankClient extends Frame {
 		public void run() {
 			while(true){
 				try {
-					Thread.sleep(10);
+					Thread.sleep(50);
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 				}
