@@ -10,14 +10,16 @@ public class Tank {
 	private int x, y;
 	// 方向判断
 	private boolean kL = false, kR = false, kU = false, kD = false;
-
+	
+	//引用TankClient的一个对象
+	private TankClient tc = null;
 	// 方向枚举
 	enum Direction {
 		L, R, U, D, LU, LD, RU, RD, stop
 	};
-	
-	private Direction t;
-	
+
+	private Direction pt_Direct = Direction.D;
+
 	// 方向变量
 	private Direction dir = Direction.stop;
 	// 坦克直径
@@ -30,7 +32,11 @@ public class Tank {
 		this.x = x;
 		this.y = y;
 	}
-
+	//带TankClient的构造函数
+	public Tank(int x,int y ,TankClient tc) {
+		this(x, y);
+		this.tc = tc;
+	}
 	// 重绘事件
 	public void draw(Graphics g) {
 		Color c = g.getColor();
@@ -40,6 +46,39 @@ public class Tank {
 		if (bullet != null)
 			bullet.paint(g);
 		move();
+		draw_pt(g);
+	}
+
+	// 绘制炮筒
+	void draw_pt(Graphics g) {
+		switch (pt_Direct) {
+		case L:
+			g.drawLine(x+Tank_r/2, y+Tank_r/2, x, y+Tank_r/2);
+			break;
+		case R:
+			g.drawLine(x+Tank_r/2, y+Tank_r/2, x + Tank_r, y+Tank_r/2);
+			break;
+		case U:
+			g.drawLine(x+Tank_r/2, y+Tank_r/2, x + Tank_r/2, y);
+			break;
+		case D:
+			g.drawLine(x+Tank_r/2, y+Tank_r/2, x + Tank_r/2, y+Tank_r);
+			break;
+		case LU:
+			g.drawLine(x+Tank_r/2, y+Tank_r/2, x, y);
+			break;
+		case LD:
+			g.drawLine(x+Tank_r/2, y+Tank_r/2, x, y+Tank_r);
+			break;
+		case RU:
+			g.drawLine(x+Tank_r/2, y+Tank_r/2, x + Tank_r, y);
+			break;
+		case RD:
+			g.drawLine(x+Tank_r/2, y+Tank_r/2, x + Tank_r, y+Tank_r);
+			break;
+		default:
+			break;
+		}
 	}
 
 	// 移动事件
@@ -94,26 +133,11 @@ public class Tank {
 		case KeyEvent.VK_UP:
 			kU = true;
 			break;
-		//为空格时发射子弹
+		// 为空格时发射子弹
 		case KeyEvent.VK_SPACE:
 			this.bullet = fire();
 		}
 		locateDirection();
-	}
-
-	// 开火事件
-	public Bullet fire() {
-		Direction temp = null;
-		if(dir == Direction.stop){
-			if( t == null)
-				temp = Direction.R;
-			else
-				temp = t;
-		}else
-			temp = dir;
-		Bullet B = new Bullet(x+(Tank_r-Bullet.bullet_r)/2, y+(Tank_r-Bullet.bullet_r)/2, temp);
-		return B;
-
 	}
 
 	// 坦克的按键释放操作：修正方向
@@ -134,6 +158,18 @@ public class Tank {
 			break;
 		}
 		locateDirection();
+	}
+
+	// 开火事件
+	public Bullet fire() {
+		Direction temp = null;
+		if (dir == Direction.stop) {
+			temp = pt_Direct;
+		} else
+			temp = dir;
+		Bullet B = new Bullet(x + (Tank_r - Bullet.bullet_r) / 2, y + (Tank_r - Bullet.bullet_r) / 2, temp);
+		return B;
+
 	}
 
 	// 判断方向
@@ -157,7 +193,7 @@ public class Tank {
 		else
 			dir = Direction.stop;
 		if (dir != Direction.stop)
-			t = dir;
+			pt_Direct = dir;
 	}
 
 }
