@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class TankClient extends Frame {
 
@@ -14,11 +15,18 @@ public class TankClient extends Frame {
 	 */
 	private static final long serialVersionUID = 1L;
 	//初始化一个坦克
-	Tank myTank = new Tank(50, 50);
+	Tank myTank = new Tank(50, 50,this);
 	//游戏框体大小
 	public static final int Game_w = 700,Game_h = 800;
+	
+	// 新建一个子弹对象
+	Bullet bullet = null;
+	// 新建子弹列表
+	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	//实现双缓冲：
 	//新建一个虚拟背景图片对象
+	
+	
 	Image offScreen = null;
 
 	//初始化方法
@@ -40,6 +48,11 @@ public class TankClient extends Frame {
 	//重写的绘图事件
 	public void paint(Graphics g) {
 		//使用坦克自己的绘图事件
+		for(int i = 0; i< bullets.size();i++){
+			bullet = bullets.get(i);
+			if (bullet != null)
+				bullet.paint(g);
+		}
 		myTank.draw(g);
 	}
 	

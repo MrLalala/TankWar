@@ -4,8 +4,8 @@ import java.awt.event.KeyEvent;
 
 public class Tank {
 
-	// 新建一个子弹对象
-	Bullet bullet = null;
+	
+
 	// 坦克起始位置
 	private int x, y;
 	// 方向判断
@@ -39,14 +39,13 @@ public class Tank {
 	}
 	// 重绘事件
 	public void draw(Graphics g) {
+		
 		Color c = g.getColor();
 		g.setColor(Color.yellow);
 		g.fillOval(x, y, Tank_r, Tank_r);
 		g.setColor(c);
-		if (bullet != null)
-			bullet.paint(g);
-		move();
 		draw_pt(g);
+		move();
 	}
 
 	// 绘制炮筒
@@ -135,7 +134,8 @@ public class Tank {
 			break;
 		// 为空格时发射子弹
 		case KeyEvent.VK_SPACE:
-			this.bullet = fire();
+			tc.bullets.add(fire());
+			break;
 		}
 		locateDirection();
 	}
