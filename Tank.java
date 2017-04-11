@@ -10,7 +10,8 @@ public class Tank {
 	private int x, y;
 	// 方向判断
 	private boolean kL = false, kR = false, kU = false, kD = false;
-	
+	//敌方坦克转向标志
+	private  int flag = 0;
 	// 拿到窗体引用
 	private TankClient tc = null;
 	
@@ -158,8 +159,14 @@ public class Tank {
 			//该方法可以将枚举类型转为相应的数组
 			Direction[] dirs = Direction.values();
 			int rn = r.nextInt(dirs.length);
-			this.dir = dirs[rn];
-			this.pt_Direct = dir;
+			if(flag == 0){
+				this.dir = dirs[rn];
+				this.pt_Direct = dir;
+			}
+			flag ++;
+			//借用随机数
+			if(flag >r.nextInt(15)+3)
+				flag = 0;
 		}
 	}
 
@@ -241,6 +248,8 @@ public class Tank {
 			dir = Direction.stop;
 		if (dir != Direction.stop)
 			pt_Direct = dir;
+		else
+			pt_Direct = Direction.U;
 	}
 
 	public Rectangle getRect() {
