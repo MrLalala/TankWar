@@ -5,10 +5,10 @@ import java.awt.Toolkit;
 public class Explode {
 	//位置
 	int x,y;
-	//生死
+	//生死标记
 	private boolean live = true;
-//	//爆炸半径
-//	int[] dia = {4,7,18,26,35,49,35,26,18,7,4};
+	//判断是否为初始化
+	private boolean init = false;
 	//同过 ToolKit勾取硬盘文件
 	private static Toolkit tk = Toolkit.getDefaultToolkit();
 	//新建图片数组
@@ -41,6 +41,12 @@ public class Explode {
 	
 	//重写绘图事件
 	public void draw(Graphics g){
+		if(!init){
+			for (int i = 0; i < imgs.length; i++) {
+				g.drawImage(imgs[i], -100, -100, null);
+			}
+			init = true;
+		}
 		if(!live){
 			tc.explodes.remove(this);
 			return;

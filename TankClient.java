@@ -30,8 +30,8 @@ public class TankClient extends Frame {
 	// 新建敌方子弹列表
 	// ArrayList<Bullet> enemyBullets = new ArrayList<Bullet>();
 	// 新建墙
-	Wall wall = new Wall(100, 300, 20, 275);
-	Wall wall2 = new Wall(500, 200, 40, 300);
+	Wall wall = new Wall(100,300,20, 275);
+	Wall wall2 = new Wall(200,200,400,40);
 	// 实现双缓冲：
 	// 新建一个虚拟背景图片对象
 	Image offScreen = null;
@@ -77,15 +77,10 @@ public class TankClient extends Frame {
 		blood.draw(g);
 		for (int i = 0; i < bullets.size(); i++) {
 			Bullet bullet = bullets.get(i);
-			// wall.hitWall(bullet);
 			bullet.hitWall(wall);
 			bullet.hitWall(wall2);
 			bullet.hitTanks(tanks);
 			bullet.hitTank(myTank);
-			// 判断子弹死亡标记
-			/*
-			 * if (!bullet.isLive()) bullets.remove(i); else
-			 */
 			bullet.paint(g);
 		}
 		for (int i = 0; i < tanks.size(); i++) {
@@ -101,11 +96,6 @@ public class TankClient extends Frame {
 				allTanks.add(temp);
 			}
 		}
-		// for (int i =0; i < enemyBullets.size(); i++){
-		// Bullet bullet = enemyBullets.get(i);
-		// bullet.hitTank(myTank);
-		// bullet.paint(g);
-		// }
 		myTank.draw(g);
 		myTank.eatBlood(blood);
 		for (int i = 0; i < explodes.size(); i++) {
