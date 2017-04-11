@@ -18,6 +18,7 @@ public class TankClient extends Frame {
 	Tank myTank = new Tank(50, 50, true, this);
 	// 敌方坦克容器
 	ArrayList<Tank> tanks = new ArrayList<Tank>();
+	ArrayList<Tank> allTanks = new ArrayList<Tank>();
 	// 游戏框体大小
 	public static final int Game_w = 700, Game_h = 800;
 	// 新建爆炸列表
@@ -38,6 +39,8 @@ public class TankClient extends Frame {
 		for (int i = 1; i <= 10; i++) {
 			tanks.add(new Tank(50 + i * 50, 50, false, Tank.Direction.D, this));
 		}
+		allTanks.addAll(tanks);
+		allTanks.add(myTank);
 		setBounds(200, 200, Game_w, Game_h);
 		setLayout(null);
 		setBackground(Color.blue);
@@ -56,7 +59,7 @@ public class TankClient extends Frame {
 	public void paint(Graphics g) {
 		// 使用坦克自己的绘图事件
 		g.drawString("Bullets Count:" + bullets.size(), 10, 70);
-		// g.drawString("enemyBullets Count:" + enemyBullets.size(), 10, 70);
+		g.drawString("AllTanks Count:" + allTanks.size(), 10, 50);
 		g.drawString("Explodes Count:" + explodes.size(), 10, 90);
 		g.drawString("Tanks Count:" + tanks.size(), 10, 110);
 		wall.draw(g);
@@ -76,6 +79,7 @@ public class TankClient extends Frame {
 		}
 		for (int i = 0; i < tanks.size(); i++) {
 			Tank tank = tanks.get(i);
+			tank.tankImpact(allTanks);
 			tank.draw(g);
 		}
 		// for (int i =0; i < enemyBullets.size(); i++){

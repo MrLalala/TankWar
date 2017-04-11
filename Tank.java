@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Tank {
@@ -74,6 +75,7 @@ public class Tank {
 		if(!live){
 			if(!isbGood())
 				tc.tanks.remove(this);
+			tc.allTanks.remove(this);
 			return;
 		}
 		Color c = g.getColor();
@@ -280,11 +282,29 @@ public class Tank {
 		this.bGood = bGood;
 	}
 	
-	//撞墙事件
-	// 坦克移动处理函数
+	// 坦克撞墙处理函数
 	public boolean tankStay(Wall wall) {
-		if (wall.wallRectangle().intersects(this.getRect()))
+		if (wall.wallRectangle().intersects(this.getRect())){
+			this.stay();
 			return true;
+		}
+			
 		return false;
+	}
+	//坦克移动撞击处理函数
+	public boolean tankImpact(ArrayList<Tank>tanks){
+		for (int i = 0;i < tanks.size();i++){
+			Tank tank = tanks.get(i);
+			if(this.isLive() && tank.isLive() && this != tank && this.getRect().intersects(tank.getRect())){
+				this.stay();
+				tank.stay();
+				return true;
+			}
+		}
+		return false;
+	}
+	public void stay(){
+		this.x = oldX;
+		this.y = oldY;
 	}
 }
