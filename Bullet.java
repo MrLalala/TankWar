@@ -97,10 +97,14 @@ public class Bullet {
 			
 	}
 	
-	//判断
+	//判断位置关系
 	public Rectangle getRect(){
 		return new Rectangle(x, y, bullet_r, bullet_r);
 	}
+//	//击墙专用位置
+//	public Rectangle getRect2(){
+//		return new Rectangle(x-bullet_r, y-bullet_r, 2*bullet_r, 2*bullet_r);
+//	}
 	
 	//击中方法
 	public boolean hitTank(Tank t){
@@ -112,7 +116,17 @@ public class Bullet {
 		}
 		return false;
 	}
+
+	// 子弹击中强处理函数
+	public boolean hitWall(Wall wall) {
+		if (wall.wallRectangle().intersects(this.getRect())) {
+			this.setLive(false);
+			return true;
+		}
+		return false;
+	}
 	
+	//对敌方坦克做击中处理
 	public boolean hitTanks(ArrayList<Tank> tanks){
 		for(int i =0 ;i<tanks.size();i++){
 			if(hitTank(tanks.get(i))){

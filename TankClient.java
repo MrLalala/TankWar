@@ -25,15 +25,18 @@ public class TankClient extends Frame {
 	// 新建我方子弹列表
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	// 新建敌方子弹列表
-//	ArrayList<Bullet> enemyBullets = new ArrayList<Bullet>();
+	// ArrayList<Bullet> enemyBullets = new ArrayList<Bullet>();
+	// 新建墙
+	Wall wall = new Wall(100, 300, 20, 275);
+	Wall wall2 = new Wall(500, 200, 40, 300);
 	// 实现双缓冲：
 	// 新建一个虚拟背景图片对象
 	Image offScreen = null;
 
 	// 初始化方法
 	public void launchFrame() {
-		for (int i = 1;i<=10;i++){
-			tanks.add(new Tank(50+i*50,50,false,Tank.Direction.D,this));
+		for (int i = 1; i <= 10; i++) {
+			tanks.add(new Tank(50 + i * 50, 50, false, Tank.Direction.D, this));
 		}
 		setBounds(200, 200, Game_w, Game_h);
 		setLayout(null);
@@ -53,14 +56,18 @@ public class TankClient extends Frame {
 	public void paint(Graphics g) {
 		// 使用坦克自己的绘图事件
 		g.drawString("Bullets Count:" + bullets.size(), 10, 70);
-		//g.drawString("enemyBullets Count:" + enemyBullets.size(), 10, 70);
+		// g.drawString("enemyBullets Count:" + enemyBullets.size(), 10, 70);
 		g.drawString("Explodes Count:" + explodes.size(), 10, 90);
 		g.drawString("Tanks Count:" + tanks.size(), 10, 110);
-		
+		wall.draw(g);
+		wall2.draw(g);
 		for (int i = 0; i < bullets.size(); i++) {
 			Bullet bullet = bullets.get(i);
+			// wall.hitWall(bullet);
+			bullet.hitWall(wall);
+			bullet.hitWall(wall2);
 			bullet.hitTanks(tanks);
-			bullet.hitTank(myTank);
+			// bullet.hitTank(myTank);
 			// 判断子弹死亡标记
 			/*
 			 * if (!bullet.isLive()) bullets.remove(i); else
@@ -71,11 +78,11 @@ public class TankClient extends Frame {
 			Tank tank = tanks.get(i);
 			tank.draw(g);
 		}
-//		for (int i =0; i < enemyBullets.size(); i++){
-//			Bullet bullet = enemyBullets.get(i);
-//			bullet.hitTank(myTank);
-//			bullet.paint(g);
-//		}
+		// for (int i =0; i < enemyBullets.size(); i++){
+		// Bullet bullet = enemyBullets.get(i);
+		// bullet.hitTank(myTank);
+		// bullet.paint(g);
+		// }
 		myTank.draw(g);
 		for (int i = 0; i < explodes.size(); i++) {
 			Explode e = explodes.get(i);

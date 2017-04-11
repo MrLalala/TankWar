@@ -8,6 +8,8 @@ public class Tank {
 
 	// 坦克起始位置
 	private int x, y;
+	// 坦克上次移动位置
+	private int oldX,oldY;
 	// 方向判断
 	private boolean kL = false, kR = false, kU = false, kD = false;
 	//敌方坦克转向标志
@@ -117,6 +119,8 @@ public class Tank {
 
 	// 移动事件
 	void move() {
+		oldX = this.x;
+		oldY = this.y;
 		switch (dir) {
 		case L:
 			x -= x_speed;
@@ -153,7 +157,10 @@ public class Tank {
 		if(y < 30) y = 30;
 		if(x > TankClient.Game_w-Tank_r-5) x = TankClient.Game_w-Tank_r-5;
 		if(y > TankClient.Game_h-Tank_r-5) y = TankClient.Game_h-Tank_r-5;
-		
+		if(this.tankStay(tc.wall) || this.tankStay(tc.wall2)){
+			this.x = oldX;
+			this.y = oldY;
+		}
 		//指定敌方坦克的随机移动方向
 		if(!isbGood()){
 			//该方法可以将枚举类型转为相应的数组
@@ -258,12 +265,13 @@ public class Tank {
 		//if(!bGood)
 			
 	}
-
+	//击中范围方法
 	public Rectangle getRect() {
 		// TODO 自动生成的方法存根
 		return new Rectangle(this.x, this.y, Tank_r, Tank_r);
 	}
-
+	
+	//属性设置
 	public boolean isbGood() {
 		return bGood;
 	}
@@ -271,5 +279,12 @@ public class Tank {
 	public void setbGood(boolean bGood) {
 		this.bGood = bGood;
 	}
-
+	
+	//撞墙事件
+	// 坦克移动处理函数
+	public boolean tankStay(Wall wall) {
+		if (wall.wallRectangle().intersects(this.getRect()))
+			return true;
+		return false;
+	}
 }
