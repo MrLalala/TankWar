@@ -16,7 +16,8 @@ public class Bullet {
 	private Color bColor = Color.black;
 	//生死标记
 	private boolean live = true;
-	
+	//敌我子弹标记
+	private boolean bGood;
 	public boolean isLive() {
 		return live;
 	}
@@ -35,10 +36,17 @@ public class Bullet {
 		this(x, y, dir);
 		this.tc = tc;
 	}
+	public Bullet(int x, int y,Tank.Direction dir,TankClient tc,boolean bGood) {
+		this(x, y, dir, tc);
+		this.bGood = bGood;
+	}
 	//子弹的重绘事件
 	public void paint(Graphics g){
 		if(!live){
+			//if(bGood)
 			tc.bullets.remove(this);
+//			else
+//				tc.enemyBullets.remove(this);
 			return;
 		}
 		Color color = g.getColor();
@@ -96,7 +104,7 @@ public class Bullet {
 	
 	//击中方法
 	public boolean hitTank(Tank t){
-		if(this.getRect().intersects(t.getRect()) && t.isLive()){
+		if(this.isLive() && this.getRect().intersects(t.getRect()) && t.isLive() && t.isbGood() != bGood){
 			t.setLive(false);
 			this.live = false;
 			tc.explodes.add(new Explode(x, y, tc));

@@ -20,12 +20,12 @@ public class TankClient extends Frame {
 	ArrayList<Tank> tanks = new ArrayList<Tank>();
 	// 游戏框体大小
 	public static final int Game_w = 700, Game_h = 800;
-
 	// 新建爆炸列表
 	ArrayList<Explode> explodes = new ArrayList<Explode>();
-	// 新建子弹列表
+	// 新建我方子弹列表
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-
+	// 新建敌方子弹列表
+//	ArrayList<Bullet> enemyBullets = new ArrayList<Bullet>();
 	// 实现双缓冲：
 	// 新建一个虚拟背景图片对象
 	Image offScreen = null;
@@ -52,13 +52,15 @@ public class TankClient extends Frame {
 	// 重写的绘图事件
 	public void paint(Graphics g) {
 		// 使用坦克自己的绘图事件
-		g.drawString("Bullets Count:" + bullets.size(), 10, 50);
-		g.drawString("Explodes Count:" + explodes.size(), 10, 70);
-		g.drawString("Tanks Count:" + tanks.size(), 10, 90);
-
+		g.drawString("Bullets Count:" + bullets.size(), 10, 70);
+		//g.drawString("enemyBullets Count:" + enemyBullets.size(), 10, 70);
+		g.drawString("Explodes Count:" + explodes.size(), 10, 90);
+		g.drawString("Tanks Count:" + tanks.size(), 10, 110);
+		
 		for (int i = 0; i < bullets.size(); i++) {
 			Bullet bullet = bullets.get(i);
 			bullet.hitTanks(tanks);
+			bullet.hitTank(myTank);
 			// 判断子弹死亡标记
 			/*
 			 * if (!bullet.isLive()) bullets.remove(i); else
@@ -69,6 +71,11 @@ public class TankClient extends Frame {
 			Tank tank = tanks.get(i);
 			tank.draw(g);
 		}
+//		for (int i =0; i < enemyBullets.size(); i++){
+//			Bullet bullet = enemyBullets.get(i);
+//			bullet.hitTank(myTank);
+//			bullet.paint(g);
+//		}
 		myTank.draw(g);
 		for (int i = 0; i < explodes.size(); i++) {
 			Explode e = explodes.get(i);

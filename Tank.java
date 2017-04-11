@@ -51,7 +51,7 @@ public class Tank {
 	public Tank(int x, int y,boolean bGood) {
 		this.x = x;
 		this.y = y;
-		this.bGood = bGood;
+		this.setbGood(bGood);
 		this.live = true;
 	}
 
@@ -70,12 +70,12 @@ public class Tank {
 	public void draw(Graphics g) {
 		//死了就不画了
 		if(!live){
-			if(!bGood)
+			if(!isbGood())
 				tc.tanks.remove(this);
 			return;
 		}
 		Color c = g.getColor();
-		if(bGood) g.setColor(Color.yellow);
+		if(isbGood()) g.setColor(Color.yellow);
 		else g.setColor(Color.red);
 		g.fillOval(x, y, Tank_r, Tank_r);
 		g.setColor(c);
@@ -155,18 +155,21 @@ public class Tank {
 		if(y > TankClient.Game_h-Tank_r-5) y = TankClient.Game_h-Tank_r-5;
 		
 		//指定敌方坦克的随机移动方向
-		if(!bGood){
+		if(!isbGood()){
 			//该方法可以将枚举类型转为相应的数组
 			Direction[] dirs = Direction.values();
 			int rn = r.nextInt(dirs.length);
 			if(flag == 0){
 				this.dir = dirs[rn];
-				this.pt_Direct = dir;
+				if(dirs[rn]!=Direction.stop){
+					this.pt_Direct = dir;
+				}
 			}
 			flag ++;
 			//借用随机数
-			if(flag >r.nextInt(15)+3)
+			if(flag >r.nextInt(20)+3)
 				flag = 0;
+			if(r.nextInt(40)>38)this.fire();
 		}
 	}
 
@@ -208,7 +211,8 @@ public class Tank {
 			kU = false;
 			break;
 		case KeyEvent.VK_SPACE:
-			tc.bullets.add(fire());
+			if(this.isLive())
+				fire();   
 			break;
 		}
 		locateDirection();
@@ -220,9 +224,12 @@ public class Tank {
 		if (dir == Direction.stop) {
 			temp = pt_Direct;
 		} else
-			temp = dir;
-		Bullet B = new Bullet(x + (Tank_r - Bullet.bullet_r) / 2, y + (Tank_r - Bullet.bullet_r) / 2, temp, this.tc);
-		return B;
+			temp = dir;	
+		Bullet b = new Bullet(x + (Tank_r - Bullet.bullet_r) / 2, y + (Tank_r - Bullet.bullet_r) / 2, temp, this.tc,isbGood());
+//		if(!bGood)
+//			tc.enemyBullets.add(b);
+		tc.bullets.add(b);
+		return b;
 
 	}
 
@@ -248,13 +255,21 @@ public class Tank {
 			dir = Direction.stop;
 		if (dir != Direction.stop)
 			pt_Direct = dir;
-		else
-			pt_Direct = Direction.U;
+		//if(!bGood)
+			
 	}
 
 	public Rectangle getRect() {
 		// TODO 自动生成的方法存根
 		return new Rectangle(this.x, this.y, Tank_r, Tank_r);
+	}
+
+	public boolean isbGood() {
+		return bGood;
+	}
+
+	public void setbGood(boolean bGood) {
+		this.bGood = bGood;
 	}
 
 }
