@@ -34,9 +34,7 @@ public class Tank {
 	private static Random r = new Random();
 
 	// 方向枚举
-	enum Direction {
-		L, R, U, D, LU, LD, RU, RD, stop
-	};
+	
 	
 	// 初始方向
 	private Direction pt_Direct = Direction.D;

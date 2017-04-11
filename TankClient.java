@@ -41,7 +41,7 @@ public class TankClient extends Frame {
 	// 初始化方法
 	public void launchFrame() {
 		for (int i = 1; i <= 10; i++) {
-			tanks.add(new Tank(50 + i * 50, 50, false, Tank.Direction.D, this));
+			tanks.add(new Tank(50 + i * 50, 50, false, Direction.D, this));
 		}
 		allTanks.addAll(tanks);
 		allTanks.add(myTank);
@@ -96,7 +96,7 @@ public class TankClient extends Frame {
 		// 加入坦克重生系统
 		if (tanks.size() == 0) {
 			for (int i = 0; i < 3; i++) {
-				Tank temp = new Tank(50 + i * 200, 50, false, Tank.Direction.D, this);
+				Tank temp = new Tank(50 + i * 200, 50, false, Direction.D, this);
 				tanks.add(temp);
 				allTanks.add(temp);
 			}

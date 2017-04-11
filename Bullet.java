@@ -7,7 +7,7 @@ public class Bullet {
 	//子弹的起始位置
 	int x,y;
 	//子弹的方向
-	Tank.Direction dir;
+	Direction dir;
 	//子弹的速度 
 	private static final int x_speed = 20,y_speed = 20;
 	//拿到窗口引用
@@ -27,16 +27,16 @@ public class Bullet {
 	//子弹的大小
 	static final int bullet_r = 10; 	
 	//构造函数：子弹的起始位置
-	public Bullet(int x, int y,Tank.Direction dir) {
+	public Bullet(int x, int y,Direction dir) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 	}
-	public Bullet(int x, int y,Tank.Direction dir,TankClient tc) {
+	public Bullet(int x, int y,Direction dir,TankClient tc) {
 		this(x, y, dir);
 		this.tc = tc;
 	}
-	public Bullet(int x, int y,Tank.Direction dir,TankClient tc,boolean bGood) {
+	public Bullet(int x, int y,Direction dir,TankClient tc,boolean bGood) {
 		this(x, y, dir, tc);
 		this.bGood = bGood;
 	}
@@ -50,7 +50,10 @@ public class Bullet {
 			return;
 		}
 		Color color = g.getColor();
-		g.setColor(bColor);
+		if(bGood)
+			g.setColor(bColor);
+		else
+			g.setColor(Color.CYAN);
 		g.fillOval(x, y, bullet_r, bullet_r);
 		g.setColor(color);
 		move();
