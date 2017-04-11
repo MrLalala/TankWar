@@ -360,4 +360,14 @@ public class Tank {
 				fire(dirs[i]);
 		}
 	}
+	
+	//³ÔÑªÊÂ¼þ
+	public void eatBlood(Blood b){
+		if(this.isbGood())
+			if(b.isLive()&&this.getRect().intersects(b.bloodRect())){
+				if(this.life != 50)
+					life += 10;
+				b.setLive(false);
+			}
+	}
 }
