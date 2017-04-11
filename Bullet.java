@@ -109,8 +109,14 @@ public class Bullet {
 	//»÷ÖÐ·½·¨
 	public boolean hitTank(Tank t){
 		if(this.isLive() && this.getRect().intersects(t.getRect()) && t.isLive() && t.isbGood() != bGood){
-			t.setLive(false);
 			this.live = false;
+			if(t.isbGood()){
+				 t.setLife(t.getLife()-10);
+				if(t.getLife() == 0)
+					t.setLive(false);
+			}
+			else 
+				t.setLive(false);
 			tc.explodes.add(new Explode(x, y, tc));
 			return true;
 		}

@@ -70,7 +70,7 @@ public class TankClient extends Frame {
 			bullet.hitWall(wall);
 			bullet.hitWall(wall2);
 			bullet.hitTanks(tanks);
-			// bullet.hitTank(myTank);
+			bullet.hitTank(myTank);
 			// ÅÐ¶Ï×Óµ¯ËÀÍö±ê¼Ç
 			/*
 			 * if (!bullet.isLive()) bullets.remove(i); else

@@ -9,6 +9,18 @@ public class Tank {
 
 	// 坦克起始位置
 	private int x, y;
+	//子弹起始位置
+	private int bx,by;
+	//记录起始生命值
+	private int life = 50;
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife(int life) {
+		this.life = life;
+	}
+
 	// 坦克上次移动位置
 	private int oldX,oldY;
 	// 方向判断
@@ -46,7 +58,7 @@ public class Tank {
 	// 方向变量
 	private Direction dir = Direction.stop;
 	// 坦克直径
-	public static final int Tank_r = 40;
+	public static final int Tank_r = 50;
 	// 移动速度
 	public static final int x_speed = 10, y_speed = 10;
 
@@ -82,6 +94,10 @@ public class Tank {
 		if(isbGood()) g.setColor(Color.yellow);
 		else g.setColor(Color.red);
 		g.fillOval(x, y, Tank_r, Tank_r);
+		if(isbGood()){
+			g.drawRect(x, y-15, Tank_r, 10);
+			g.fillRect(x, y-15, life, 10);
+		}
 		g.setColor(c);
 		draw_pt(g);
 		move();
@@ -126,31 +142,47 @@ public class Tank {
 		switch (dir) {
 		case L:
 			x -= x_speed;
+			bx = x;
+			by = y+(Tank_r - Bullet.bullet_r)/2;
 			break;
 		case R:
 			x += x_speed;
+			bx = x+Tank_r;
+			by = y+(Tank_r - Bullet.bullet_r)/2;
 			break;
 		case U:
 			y -= y_speed;
+			bx = x+(Tank_r - Bullet.bullet_r)/2;
+			by = y;
 			break;
 		case D:
 			y += y_speed;
+			bx = x+(Tank_r - Bullet.bullet_r)/2;
+			by = y+Tank_r;
 			break;
 		case LU:
 			x -= x_speed;
 			y -= y_speed;
+			bx = x;
+			by = y;
 			break;
 		case LD:
 			x -= x_speed;
 			y += y_speed;
+			bx = x;
+			by = y+(Tank_r - Bullet.bullet_r);
 			break;
 		case RU:
 			x += x_speed;
 			y -= y_speed;
+			bx = x+(Tank_r - Bullet.bullet_r);
+			by = y;
 			break;
 		case RD:
 			x += x_speed;
 			y += y_speed;
+			bx = x+Tank_r;
+			by = y+Tank_r;
 			break;
 		case stop:
 			break;
@@ -223,6 +255,10 @@ public class Tank {
 			if(this.isLive())
 				fire();   
 			break;
+		case KeyEvent.VK_A:
+			if(this.isLive())
+				this.superBullet();
+			break;
 		}
 		locateDirection();
 	}
@@ -234,12 +270,20 @@ public class Tank {
 			temp = pt_Direct;
 		} else
 			temp = dir;	
-		Bullet b = new Bullet(x + (Tank_r - Bullet.bullet_r) / 2, y + (Tank_r - Bullet.bullet_r) / 2, temp, this.tc,isbGood());
+		Bullet b = new Bullet(bx,by, temp, this.tc,isbGood());
 //		if(!bGood)
 //			tc.enemyBullets.add(b);
 		tc.bullets.add(b);
 		return b;
 
+	}
+	//带方向的开火事件
+	public Bullet fire(Direction d){
+		Bullet b = new Bullet(bx,by, d, this.tc,isbGood());
+//		if(!bGood)
+//			tc.enemyBullets.add(b);
+		tc.bullets.add(b);
+		return b;
 	}
 
 	// 判断方向
@@ -298,13 +342,22 @@ public class Tank {
 			if(this.isLive() && tank.isLive() && this != tank && this.getRect().intersects(tank.getRect())){
 				this.stay();
 				tank.stay();
-				return true;
 			}
 		}
 		return false;
 	}
+	//停止事件
 	public void stay(){
 		this.x = oldX;
 		this.y = oldY;
+	}
+	
+	//超级炮弹事件
+	public void superBullet(){
+		Direction[] dirs = Direction.values();
+		for(int i = 0;i<dirs.length;i++){
+			if(dirs[i] != Direction.stop)
+				fire(dirs[i]);
+		}
 	}
 }
