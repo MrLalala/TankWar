@@ -14,7 +14,6 @@ public class TankClient extends Frame {
 	/**
 	 * 
 	 */
-
 	private static final long serialVersionUID = 1L;
 	// 初始化一个坦克
 	Tank myTank = new Tank(335,745, true, this);
@@ -27,8 +26,6 @@ public class TankClient extends Frame {
 	ArrayList<Explode> explodes = new ArrayList<Explode>();
 	// 新建我方子弹列表
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-	// 新建敌方子弹列表
-	// ArrayList<Bullet> enemyBullets = new ArrayList<Bullet>();
 	// 新建墙
 	Wall wall = new Wall(100,300,20, 275);
 	Wall wall2 = new Wall(200,200,400,40);
@@ -40,7 +37,9 @@ public class TankClient extends Frame {
 
 	// 初始化方法
 	public void launchFrame() {
-		for (int i = 1; i <= 10; i++) {
+		int initCount = Integer.parseInt(PropertyMgr.getProp("initTankCount"));
+		//System.out.println(initCount);
+		for (int i = 1; i <= initCount; i++) {
 			tanks.add(new Tank(50 + i * 50, 50, false, Direction.D, this));
 		}
 		allTanks.addAll(tanks);
@@ -90,7 +89,7 @@ public class TankClient extends Frame {
 		}
 		// 加入坦克重生系统
 		if (tanks.size() == 0) {
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i <Integer.parseInt(PropertyMgr.getProp("reproducer")); i++) {
 				Tank temp = new Tank(50 + i * 180, 50, false, Direction.D, this);
 				tanks.add(temp);
 				allTanks.add(temp);
