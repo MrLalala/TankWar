@@ -90,8 +90,8 @@ public class TankClient extends Frame {
 		}
 		// 加入坦克重生系统
 		if (tanks.size() == 0) {
-			for (int i = 0; i < 3; i++) {
-				Tank temp = new Tank(50 + i * 200, 50, false, Direction.D, this);
+			for (int i = 0; i < 5; i++) {
+				Tank temp = new Tank(50 + i * 180, 50, false, Direction.D, this);
 				tanks.add(temp);
 				allTanks.add(temp);
 			}

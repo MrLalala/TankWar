@@ -1,8 +1,12 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Tank {
@@ -13,6 +17,27 @@ public class Tank {
 	private int bx,by;
 	//记录起始生命值
 	private int life = 50;
+	//资源钩子
+	private static Toolkit tk = Toolkit.getDefaultToolkit();
+	private static Image[] imgs = null;
+	//使用字典
+	private static Map<String,Image>map = new HashMap<>();
+	static {
+		imgs = new Image[] { tk.getImage(Tank.class.getClassLoader().getResource("images/tankL.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource("images/tankR.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource("images/tankU.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource("images/tankD.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource("images/tankLU.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource("images/tankLD.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource("images/tankRU.gif")),
+				tk.getImage(Tank.class.getClassLoader().getResource("images/tankRD.gif"))
+		};
+		map.put("L", imgs[0]);map.put("R", imgs[1]);map.put("U", imgs[2]);map.put("D", imgs[3]);
+		map.put("LU", imgs[4]);map.put("LD", imgs[5]);map.put("RU", imgs[6]);map.put("RD", imgs[7]);
+	}
+	
+	//位置标记
+
 	public int getLife() {
 		return life;
 	}
@@ -91,7 +116,6 @@ public class Tank {
 		Color c = g.getColor();
 		if(isbGood()) g.setColor(Color.yellow);
 		else g.setColor(Color.red);
-		g.fillOval(x, y, Tank_r, Tank_r);
 		if(isbGood()){
 			g.drawRect(x, y-15, Tank_r, 10);
 			g.fillRect(x, y-15, life, 10);
@@ -105,28 +129,28 @@ public class Tank {
 	void draw_pt(Graphics g) {
 		switch (pt_Direct) {
 		case L:
-			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x, y + Tank_r / 2);
+			g.drawImage(map.get("L"), x, y, null);
 			break;
 		case R:
-			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x + Tank_r, y + Tank_r / 2);
+			g.drawImage(map.get("R"), x, y, null);
 			break;
 		case U:
-			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x + Tank_r / 2, y);
+			g.drawImage(map.get("U"), x, y, null);
 			break;
 		case D:
-			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x + Tank_r / 2, y + Tank_r);
+			g.drawImage(map.get("D"), x, y, null);
 			break;
 		case LU:
-			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x, y);
+			g.drawImage(map.get("LU"), x, y, null);
 			break;
 		case LD:
-			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x, y + Tank_r);
+			g.drawImage(map.get("LD"), x, y, null);
 			break;
 		case RU:
-			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x + Tank_r, y);
+			g.drawImage(map.get("RU"), x, y, null);
 			break;
 		case RD:
-			g.drawLine(x + Tank_r / 2, y + Tank_r / 2, x + Tank_r, y + Tank_r);
+			g.drawImage(map.get("RD"), x, y, null);
 			break;
 		default:
 			break;
