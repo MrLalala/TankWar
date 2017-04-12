@@ -44,7 +44,12 @@ public class Bullet {
 		map.put("L", imgs[0]);map.put("R", imgs[1]);map.put("U", imgs[2]);map.put("D", imgs[3]);
 		map.put("LU", imgs[4]);map.put("LD", imgs[5]);map.put("RU", imgs[6]);map.put("RD", imgs[7]);
 	}
-	//构造函数：子弹的起始位置
+	/**
+	 * 构造函数：子弹的起始位置
+	 * @param x ：起始横坐标
+	 * @param y ：起始纵坐标
+	 * @param dir ：起始方向
+	 */
 	public Bullet(int x, int y,Direction dir) {
 		this.x = x;
 		this.y = y;
@@ -58,7 +63,10 @@ public class Bullet {
 		this(x, y, dir, tc);
 		this.bGood = bGood;
 	}
-	//子弹的重绘事件
+	/**
+	 * 子弹的重绘事件
+	 * @param g ：主函数的画笔
+	 */
 	public void paint(Graphics g){
 		if(!live){
 			tc.bullets.remove(this);
@@ -66,7 +74,10 @@ public class Bullet {
 		}
 		move(g);
 	}
-	//子弹的移动事件
+	/**
+	 * 子弹的移动事件
+	 * @param g ：主窗体的画笔
+	 */
 	void move(Graphics g){
 		switch (dir) {
 		case L:
@@ -116,7 +127,10 @@ public class Bullet {
 			
 	}
 	
-	//判断位置关系
+	/**
+	 * 判断位置关系
+	 * @return ：该子弹的作用范围
+	 */
 	public Rectangle getRect(){
 		return new Rectangle(x, y, bullet_r, bullet_r);
 	}
@@ -125,7 +139,11 @@ public class Bullet {
 //		return new Rectangle(x-bullet_r, y-bullet_r, 2*bullet_r, 2*bullet_r);
 //	}
 	
-	//击中方法
+	/**
+	 * 击中方法
+	 * @param t ：传入的坦克对象
+	 * @return	：是否击中标记
+	 */
 	public boolean hitTank(Tank t){
 		if(this.isLive() && this.getRect().intersects(t.getRect()) && t.isLive() && t.isbGood() != bGood){
 			this.live = false;
@@ -142,7 +160,11 @@ public class Bullet {
 		return false;
 	}
 
-	// 子弹击中强处理函数
+	/**
+	 *  子弹击墙壁处理函数
+	 * @param wall ：主窗体中的墙
+	 * @return ： 是否被击中
+	 */
 	public boolean hitWall(Wall wall) {
 		if (wall.wallRectangle().intersects(this.getRect())) {
 			this.setLive(false);
@@ -151,7 +173,11 @@ public class Bullet {
 		return false;
 	}
 	
-	//对敌方坦克做击中处理
+	/**
+	 * 对敌方坦克做击中处理
+	 * @param tanks ：坦克列表
+	 * @return ：是否被击中
+	 */
 	public boolean hitTanks(ArrayList<Tank> tanks){
 		for(int i =0 ;i<tanks.size();i++){
 			if(hitTank(tanks.get(i))){

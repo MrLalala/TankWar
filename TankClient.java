@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class TankClient extends Frame {
 
 	/**
-	 * 
+	 * 这是javadoc文档注释
 	 */
 	private static final long serialVersionUID = 1L;
 	// 初始化一个坦克
@@ -58,7 +58,9 @@ public class TankClient extends Frame {
 		new Thread(new PaintThread()).start();
 	}
 
-	// 重写的绘图事件
+	/**
+	 *  重写的绘图事件
+	 */
 	public void paint(Graphics g) {
 		// 使用坦克自己的绘图事件
 		g.drawString("Bullets Count:" + bullets.size(), 10, 70);
@@ -103,7 +105,9 @@ public class TankClient extends Frame {
 		}
 	}
 
-	// 重写主窗体的 update 方法
+	/**
+	 *  重写主窗体的 update 方法
+	 */
 	public void update(Graphics g) {
 		// 新建图片，该图片和主窗体一致
 		if (offScreen == null) {
@@ -122,7 +126,11 @@ public class TankClient extends Frame {
 		g.drawImage(offScreen, 0, 0, null);
 	}
 
-	// 绘图重置线程
+	/**
+	 *  绘图重置线程
+	 * @author Administrator
+	 *
+	 */
 	private class PaintThread implements Runnable {
 
 		public void run() {
@@ -155,12 +163,17 @@ public class TankClient extends Frame {
 			myTank.keyPressed(e);
 		}
 	}
-	//重生方法
+	/**
+	 * 重生方法
+	 */
 	private void back(){
 		myTank = new Tank(335,745, true, this);
 		allTanks.add(myTank);
 	}
-	// 主函数：
+	/**
+	 *  主函数：
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// TODO 自动生成的方法存根
 		TankClient tc = new TankClient();
