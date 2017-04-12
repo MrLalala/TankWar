@@ -1,7 +1,10 @@
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Bullet {
 	//子弹的起始位置
@@ -12,8 +15,6 @@ public class Bullet {
 	private static final int x_speed = 20,y_speed = 20;
 	//拿到窗口引用
 	private TankClient tc;
-	//设置子弹颜色
-	private Color bColor = Color.black;
 	//生死标记
 	private boolean live = true;
 	//敌我子弹标记
@@ -25,7 +26,24 @@ public class Bullet {
 		this.live = isLive;
 	}
 	//子弹的大小
-	static final int bullet_r = 10; 	
+	static final int bullet_r = 12; 	
+	//资源钩子
+	private static Toolkit tk = Toolkit.getDefaultToolkit();
+	private static Map<String, Image>map = new HashMap<>();
+	private static Image[] imgs = {
+		tk.getImage(Bullet.class.getClassLoader().getResource("images/missileL.gif")),
+		tk.getImage(Bullet.class.getClassLoader().getResource("images/missileR.gif")),
+		tk.getImage(Bullet.class.getClassLoader().getResource("images/missileD.gif")),
+		tk.getImage(Bullet.class.getClassLoader().getResource("images/missileU.gif")),
+		tk.getImage(Bullet.class.getClassLoader().getResource("images/missileLU.gif")),
+		tk.getImage(Bullet.class.getClassLoader().getResource("images/missileLD.gif")),
+		tk.getImage(Bullet.class.getClassLoader().getResource("images/missileRU.gif")),
+		tk.getImage(Bullet.class.getClassLoader().getResource("images/missileRD.gif"))
+	};
+	static{
+		map.put("L", imgs[0]);map.put("R", imgs[1]);map.put("U", imgs[2]);map.put("D", imgs[3]);
+		map.put("LU", imgs[4]);map.put("LD", imgs[5]);map.put("RU", imgs[6]);map.put("RD", imgs[7]);
+	}
 	//构造函数：子弹的起始位置
 	public Bullet(int x, int y,Direction dir) {
 		this.x = x;
@@ -43,51 +61,49 @@ public class Bullet {
 	//子弹的重绘事件
 	public void paint(Graphics g){
 		if(!live){
-			//if(bGood)
 			tc.bullets.remove(this);
-//			else
-//				tc.enemyBullets.remove(this);
 			return;
 		}
-		Color color = g.getColor();
-		if(bGood)
-			g.setColor(bColor);
-		else
-			g.setColor(Color.CYAN);
-		g.fillOval(x, y, bullet_r, bullet_r);
-		g.setColor(color);
-		move();
+		move(g);
 	}
 	//子弹的移动事件
-	void move(){
+	void move(Graphics g){
 		switch (dir) {
 		case L:
 			x -= x_speed;
+			g.drawImage(map.get("L"), x, y, null);
 			break;
 		case R:
 			x += x_speed;
+			g.drawImage(map.get("R"), x, y, null);
 			break;
 		case U:
 			y -= y_speed;
+			g.drawImage(map.get("U"), x, y, null);
 			break;
 		case D:
 			y += y_speed;
+			g.drawImage(map.get("D"), x, y, null);
 			break;
 		case LU:
 			x -= x_speed;
 			y -= y_speed;
+			g.drawImage(map.get("LU"), x, y, null);
 			break;
 		case LD:
 			x -= x_speed;
 			y += y_speed;
+			g.drawImage(map.get("LD"), x, y, null);
 			break;
 		case RU:
 			x += x_speed;
 			y -= y_speed;
+			g.drawImage(map.get("RU"), x, y, null);
 			break;
 		case RD:
 			x += x_speed;
 			y += y_speed;
+			g.drawImage(map.get("RD"), x, y, null);
 			break;
 		default:
 			break;
